@@ -1,2 +1,3 @@
-# DiseasesDetection
-Simple app to diseases detection 
+# DiseasesClassification
+
+Simple app to diseases classification 
