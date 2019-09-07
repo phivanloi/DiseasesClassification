@@ -1,0 +1,45 @@
+﻿@model HomeIndexModel
+@{
+    ViewData["Title"] = "Phân loại bệnh theo triệu chứng";
+}
+<h5>Dữ liệu training được lấy từ trang wikimed.vn. 1452 triệu chứng và bệnh, Download tại <a href="~/uploads/SysptomTraining.txt">đây</a></h5>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" method="post">
+            <div class="form-group">
+                <label asp-for="Syptom" class="col-sm-12 control-label">Triệu chứng ít nhất 64 ký tự</label>
+                <div class="col-sm-12">
+                    <input type="text" asp-for="Syptom" required class="form-control" placeholder="Triệu chứng">
+                    <p>Số ký tự hiện tại <span id="curentchars">0</span> còn lại <span id="chars">512</span> </p>
+                    <span asp-validation-for="Syptom"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-default btn-success">Chuẩn đoán</button>
+                </div>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.Name))
+            {
+                <div class="form-group">
+                    <div class="col-sm-12 border border-success alert alert-success">
+                        Bệnh nhân được phân loại về: <b>@Model.Name</b>, với độ chính xác <b>@Model.PerdictionPercentage.ToString("0,0") %</b>
+                    </div>
+                </div>
+            }
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        var maxLength = 512;
+        $('#@Html.IdFor(q=>q.Syptom)').keyup(function() {
+            var length = $(this).val().length;
+            $('#curentchars').text(length);
+            var length = maxLength-length;
+            $('#chars').text(length);
+        });
+    </script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
